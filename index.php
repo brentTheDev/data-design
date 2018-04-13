@@ -50,6 +50,6 @@
 					<li>Server completes task, authorizes the connection between Google and Bandcamp, and returns verification page.</li>
 					<li>Jane is now logged into Bandcamp and is able to make purchases.</li>
 				</ul>
-			<p>Frequency of Use: Twice a week</p>
+		<p><strong>Frequency of Use:</strong> Twice a week</p>
 	</body>
 </html>
