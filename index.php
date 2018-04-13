@@ -14,7 +14,7 @@
 				<li><strong>Age:</strong> 23</li>
 				<li><strong>Gender:</strong> Female</li>
 				<li><strong>Occupation:</strong> Tech Intern/Grad Student</li>
-				<li><strong>Technology:</strong> Phone; Samsung Galaxy S8. Laptop; Microsoft Surface Book</li>
+				<li><strong>Technology:</strong> <em>Phone</em>; Samsung Galaxy S8. <em>Laptop</em>; Microsoft Surface Book</li>
 				<li><strong>Attitude:</strong> Likes to leave comments about latest releases, prefers PayPal payment, enjoys hearing similar artists/genres</li>
 				<li><strong>Needs/Goals/Features:</strong></li>
 					<ul>
@@ -34,7 +34,7 @@
 
 		<h2>Use Case:</h2>
 			<p><strong>Title:</strong> Signing into Sango's Bandcamp page with a Google account.</p>
-			<p><strong>Description:</strong> Jane wants to sign into Sango's Bandcamp page with here Google account so that she doesn't have to create a new user account with Bandcamp.</p>
+			<p><strong>Description:</strong> Jane wants to sign into Sango's Bandcamp page with her Google account so that she doesn't have to create a new user account with Bandcamp.</p>
 			<p><strong>Name of user &amp; their role:</strong> Jane; music lover who enjoys purchasing her favorite artists' music via the Internet.</p>
 			<p><strong>Usage preconditions:</strong> Must have Google account, must be a new user to Bandcamp</p>
 			<p><strong>Usage postconditions:</strong> Bandcamp account is linked to Google account, ability to sign in with Google account to make purchases</p>
