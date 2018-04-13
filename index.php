@@ -7,6 +7,7 @@
 	<body>
 
 	<h1>Data Design Project</h1>
+
 		<h2>User Persona</h2>
 			<ul>
 				<li><strong>Name:</strong> Jane Locke</li>
@@ -27,5 +28,8 @@
 						<li>Can't pay with Bitcoin</li>
 					</ul>
 			</ul>
+
+		<h2>User Story</h2>
+			<p>As a user, I would sign in to Bandcamp via Google to make purchases</p>
 	</body>
 </html>
