@@ -7,14 +7,13 @@
 	<body>
 
 	<h1>Data Design Project</h1>
-
 		<h2>User Persona</h2>
 			<ul>
 				<li><strong>Name:</strong> Jane Locke</li>
-				<li><strong>Age:</strong> 22</li>
+				<li><strong>Age:</strong> 23</li>
 				<li><strong>Gender:</strong> Female</li>
-				<li><strong>Occupation:</strong> Bank Teller</li>
-				<li><strong>Technology:</strong> Phone; Samsung Galaxy S8. Laptop: Microsoft Surface Book</li>
+				<li><strong>Occupation:</strong> Tech Intern/Grad Student</li>
+				<li><strong>Technology:</strong> Phone; Samsung Galaxy S8. Laptop; Microsoft Surface Book</li>
 				<li><strong>Attitude:</strong> Likes to leave comments about latest releases, prefers PayPal payment, enjoys hearing similar artists/genres</li>
 				<li><strong>Needs/Goals/Features:</strong></li>
 					<ul>
@@ -24,8 +23,8 @@
 					</ul>
 				<li><strong>Frustrations:</strong></li>
 					<ul>
-						<li>Inablity to purchase music via mobile app</li>
-						<li></li>
+						<li>Can't link account with Google</li>
+						<li>Can't pay with Bitcoin</li>
 					</ul>
 			</ul>
 	</body>
