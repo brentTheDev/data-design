@@ -9,10 +9,12 @@
 	<h1>Data Design Project</h1>
 
 		<h2>User Persona:</h2>
+			<img src="./jlProfile.jpg" alt = "Jane Locke, on travel through South America."
 			<ul>
 				<li><strong>Name:</strong> Jane Locke</li>
 				<li><strong>Age:</strong> 23</li>
 				<li><strong>Gender:</strong> Female</li>
+				<li><strong>Ethnicity:</strong> Mixed Race</li>
 				<li><strong>Occupation:</strong> Tech Intern/Grad Student</li>
 				<li><strong>Technology:</strong> <em>Phone</em>; Samsung Galaxy S8. <em>Laptop</em>; Microsoft Surface Book</li>
 				<li><strong>Attitude:</strong> Likes to leave comments about latest releases, prefers PayPal payment, enjoys hearing similar artists/genres</li>
@@ -30,7 +32,7 @@
 			</ul>
 
 		<h2>User Story:</h2>
-			<p>As a user, I would like to sign into Bandcamp via Google to make purchases</p>
+			<p>As a user, Jane would like to sign into Bandcamp via Google to make purchases</p>
 
 		<h2>Use Case:</h2>
 			<p><strong>Title:</strong> Signing into Sango's Bandcamp page with a Google account.</p>
@@ -50,6 +52,9 @@
 					<li>Server completes task, authorizes the connection between Google and Bandcamp, and returns verification page.</li>
 					<li>Jane is now logged into Bandcamp and is able to make purchases.</li>
 				</ul>
-		<p><strong>Frequency of Use:</strong> Twice a week</p>
+			<p><strong>Frequency of Use:</strong> Twice a week</p>
+
+			<h2>Conceptual Model</h2>
+				<h3>user</h3>
 	</body>
 </html>
