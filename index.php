@@ -9,7 +9,7 @@
 	<h1>Data Design Project</h1>
 
 		<h2>User Persona:</h2>
-			<img src="./jlProfile.jpg" alt = "Jane Locke, on travel through South America.">
+			<img src="./jl-profile.jpg" alt = "Jane Locke, on travel through South America.">
 			<ul>
 				<li><strong>Name:</strong> Jane Locke</li>
 				<li><strong>Age:</strong> 23</li>
@@ -32,25 +32,25 @@
 			</ul>
 
 		<h2>User Story:</h2>
-			<p>As a user, Jane would like to sign into Bandcamp via Google account</p>
+			<p>As a user, Jane would like to add a newly released album to her wishlist.</p>
 
 		<h2>Use Case:</h2>
-			<p><strong>Title:</strong> Signing into Sango's Bandcamp page with a Google account.</p>
-			<p><strong>Description:</strong> Jane wants to sign into Sango's Bandcamp page with her Google account so that she doesn't have to create a new user account with Bandcamp.</p>
+			<p><strong>Title:</strong> Adding Sango's latest album to her wishlist.</p>
+			<p><strong>Description:</strong> Jane wants to add Sango's latest album to the wishlist on her Bandcamp Fan account.</p>
 			<p><strong>Name of user &amp; their role:</strong> Jane; music lover who enjoys purchasing her favorite artists' music via the Internet.</p>
-			<p><strong>Usage preconditions:</strong> Must have Google account, must be a new user to Bandcamp</p>
-			<p><strong>Usage postconditions:</strong> Bandcamp account is linked to Google account, ability to sign in with Google account.</p>
+			<p><strong>Usage preconditions:</strong> Must have Bandcamp account and logged in.</p>
+			<p><strong>Usage postconditions:</strong> New album is saved to wishlist and she can view on her wishlist page.</p>
 			<p><strong>Interaction flow:</strong></p>
 				<ul>
 					<li>Jane enters sango.bandcamp.com into her web browser.</li>
 					<li>Server returns Sango's main Bandcamp page.</li>
-					<li>Jane clicks the "Sign In" link on Sango's Bandcamp page.</li>
-					<li>Server returns a "User Sign In" page.</li>
-					<li>Jane sees an option to sign in via Google and clicks button.</li>
-					<li>Server returns a page to verify the Google authentication.</li>
-					<li>Jane clicks button to confirm that she wants Google to authorize Bandcamp to access her data.</li>
-					<li>Server completes task, authorizes the connection between Google and Bandcamp, and returns verification page.</li>
-					<li>Jane is now logged into Bandcamp via Google account.</li>
+					<li>Jane clicks on "Wishlist" link on Sango's Bandcamp page. Heart icon next to "Wishlist" is empty</li>
+					<li>Server completes request to add artist album to wishlist.</li>
+					<li>Jane sees that the heart icon is now red and reads "In Wishlist" to notify her that it is in the wishlist of her Fan account.</li>
+					<li>Server is displaying same album page with the colored icon and added link that reads "In Wishlist"</li>
+					<li>Jane wants to see her wishlist and clicks a link next to "In Wishlist" which is labeled "view". </li>
+					<li>Server loads Jane's wishlist page for her Bandcamp Fan account.</li>
+					<li>Jane is able to see all newly added item on her wishlist</li>
 				</ul>
 			<p><strong>Frequency of Use:</strong> Twice a week</p>
 
@@ -100,6 +100,6 @@
 						<li>Many fans may own many items - (m to n)</li>
 					</ul>
 			<h2>Entity Relationship Diagram</h2>
-				<img src = "./data-design-ERD.svg" alt = "Data Design ERD">
+				<img src = "./data-design-erd.svg" alt = "Data Design ERD">
 	</body>
 </html>
