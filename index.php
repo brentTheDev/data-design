@@ -59,22 +59,21 @@
 					<p><strong>ARTIST:</strong>
 						<ul>
 							<li>artistId (primary key)</li>
-							<li>artistName</li>
 							<li>artistGenre</li>
+							<li>artistName</li>
 						</ul>
 					<p><strong>FAN:</strong>
 						<ul>
 							<li>fanId (primary key)</li>
-							<li>fanActivationToken (for account verification)</li>
-							<li>fanUsername</li>
+							<li>fanActivationToken (for Account verification)</li>
 							<li>fanEmail</li>
 							<li>fanHash (for account password)</li>
-							<li>fanItemId (foreign key)</li>
+							<li>fanUsername</li>
 						</ul>
 					<p><strong>WISHLIST:</strong>
 						<ul>
-							<li>wishlistFanId (foreign key)</li>
 							<li>wishlistArtistId (foreign key)</li>
+							<li>wishlistFanId (foreign key)</li>
 						</ul>
 				<h3>Relations</h3>
 					<ul>
