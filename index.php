@@ -39,18 +39,18 @@
 			<p><strong>Description:</strong> Jane wants to add Sango's latest album to the wishlist on her Bandcamp Fan account.</p>
 			<p><strong>Name of user &amp; their role:</strong> Jane; music lover who enjoys purchasing her favorite artists' music via the Internet.</p>
 			<p><strong>Usage preconditions:</strong> Must have Bandcamp account and logged in.</p>
-			<p><strong>Usage postconditions:</strong> New album is saved to wishlist and she can view on her wishlist page.</p>
+			<p><strong>Usage postconditions:</strong> Artist is saved to wishlist and she can view on her wishlist page.</p>
 			<p><strong>Interaction flow:</strong></p>
 				<ul>
 					<li>Jane enters sango.bandcamp.com into her web browser.</li>
 					<li>Server returns Sango's main Bandcamp page.</li>
 					<li>Jane clicks on "Wishlist" link on Sango's Bandcamp page. Heart icon next to "Wishlist" is empty</li>
-					<li>Server completes request to add artist album to wishlist.</li>
-					<li>Jane sees that the heart icon is now red and reads "In Wishlist" to notify her that it is in the wishlist of her Fan account.</li>
+					<li>Server completes request to add artist to wishlist.</li>
+					<li>Jane sees that the heart icon next to artist name is now red and reads "In Wishlist" to notify her that the artist is in the wishlist of her Fan account.</li>
 					<li>Server is displaying same album page with the colored icon and added link that reads "In Wishlist"</li>
 					<li>Jane wants to see her wishlist and clicks a link next to "In Wishlist" which is labeled "view". </li>
 					<li>Server loads Jane's wishlist page for her Bandcamp Fan account.</li>
-					<li>Jane is able to see all newly added item on her wishlist</li>
+					<li>Jane is able to see all newly added artist on her wishlist</li>
 				</ul>
 			<p><strong>Frequency of Use:</strong> Twice a week</p>
 
@@ -60,10 +60,7 @@
 						<ul>
 							<li>artistId (primary key)</li>
 							<li>artistName</li>
-							<li>artistAlbumTitle</li>
-							<li>artistTrackTitle</li>
 							<li>artistGenre</li>
-							<li>artistMusicFormat</li>
 						</ul>
 					<p><strong>FAN:</strong>
 						<ul>
@@ -74,17 +71,6 @@
 							<li>fanHash (for account password)</li>
 							<li>fanItemId (foreign key)</li>
 						</ul>
-					<p><strong>ITEM:</strong>
-						<ul>
-							<li>itemID (primary key)</li>
-							<li>itemArtistID (foreign key)</li>
-							<li>itemPrice</li>
-						</ul>
-					<p><strong>SHOPPINGCART:</strong>
-						<ul>
-							<li>shoppingCartFanId (foreign key)</li>
-							<li>shoppingCartItemId (foreign key)</li>
-						</ul>
 					<p><strong>WISHLIST:</strong>
 						<ul>
 							<li>wishlistFanId (foreign key)</li>
@@ -92,12 +78,8 @@
 						</ul>
 				<h3>Relations</h3>
 					<ul>
-						<li>One shopping cart may only belong to 1 fan (1 to 1)</li>
 						<li>One wishlist may only belong to 1 fan (1 to 1)</li>
-						<li>Many items may belong in many shopping carts (m to n)</li>
 						<li>Many artists may be on many wishlists. (m to n)</li>
-						<li>Many artists sell many items (m to n)</li>
-						<li>Many fans may own many items - (m to n)</li>
 					</ul>
 			<h2>Entity Relationship Diagram</h2>
 				<img src = "./data-design-erd.svg" alt = "Data Design ERD">
