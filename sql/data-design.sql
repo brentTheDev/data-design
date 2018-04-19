@@ -1,4 +1,4 @@
-ALTER bkie3 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER	DATABASE bkie3 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS wishlist;
 DROP TABLE IF EXISTS fan;
