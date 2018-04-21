@@ -28,6 +28,34 @@ class fan {
 	private $fanUsername;
 }
 
+/**
+ * constructor for this Fan
+ *
+ * @param string|Uuid $newFanId id of this Fan or null if a new Fan
+ * @param string|Uuid $newTweetProfileId id of the Profile that sent this Tweet
+ * @param string $newTweetContent string containing actual tweet data
+ * @param string $newFanUsername string containing Fan username
+ * @throws \InvalidArgumentException if data types are not valid
+ * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+ * @throws \TypeError if data types violate type hints
+ * @throws \Exception if some other exception occurs
+ * @Documentation https://php.net/manual/en/language.oop5.decon.php
+ **/
+public function __construct($newFanId, $newFanActivationToken, string $newFanEmail, $newFanHash, string $newFanUsername) {
+	try {
+		$this->setFanId($newFanId);
+		$this->setFanActivationToken($newFanActivationToken);
+		$this->setFanEmail($newFanEmail);
+		$this->setFanHash($newFanHash);
+		$this->setFanUsername($newFanUsername);
+	}
+		//determine what exception type was thrown
+	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+}
+
 	/**
 	 * accessor method for fan id
 	 *
