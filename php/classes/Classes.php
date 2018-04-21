@@ -96,9 +96,9 @@ class fan {
 	 *
 	 * @param mixed $fanHash
 	 */
-	public function setFanHash($fanHash) : void {
-		$this->fanHash = $fanHash;
-	}
+	public function setFanHash($fanHash): void {
+		$this->profileHash = $profileHash;
+		}
 
 	/**
 	 * accessor method for fan username
@@ -111,7 +111,18 @@ class fan {
 
 	/**
 	 * @param string $fanUsername
+	 * @throw \IN
 	 */
-	public function setFanUsername(string $fanUsername) : void {
-		$this->fanUsername = $fanUsername;
+	public function setFanUsername(string $newFanUsername) : void {
+		$newFanUsername = trim($newFanUsername);
+		$newFanUsername = filter_var($newFanUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newFanUsername) === true) {
+			throw(new \InvalidArgumentException("name is insecure"));
+		}
+
+		if(strlen($newFanUsername) > 32)
+			throw(new \RangeException("name cannot fit in mySQL"));
+
+		$this->fanUsername = $newFanUsername;
 	}
