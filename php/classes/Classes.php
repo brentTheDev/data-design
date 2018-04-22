@@ -1,5 +1,12 @@
 <?php
-class fan {
+namespace Edu\Cnm\DataDesign;
+
+require_once("autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
+
+class Fan implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for the fan; this is the primary key
@@ -32,8 +39,8 @@ class fan {
  * constructor for this Fan
  *
  * @param string|Uuid $newFanId id of this Fan or null if a new Fan
- * @param string|Uuid $newTweetProfileId id of the Profile that sent this Tweet
- * @param string $newTweetContent string containing actual tweet data
+ * @param string|Uuid $newFanActivationToken token of the fan signs up
+ * @param string $newFanEmail string containing Fan email address
  * @param string $newFanUsername string containing Fan username
  * @throws \InvalidArgumentException if data types are not valid
  * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -68,10 +75,18 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 	/**
 	 * mutator method for fan id
 	 *
-	 * @param Uuid $fanId
+	 * @param Uuid|string $newFanId
 	 */
-	public function setFanId(Uuid $fanId) {
-		$this->fanId = $fanId;
+	public function setFanId( $newFanId) {
+		try {
+				$uuid = self::validateUuid( $newFanId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+				$exceptionType = get_class($exception);
+				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the fan activation token
+		$this->fanId = $uuid;
 	}
 
 	/**
@@ -79,17 +94,25 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 	 *
 	 * @return Uuid
 	 */
-	public function getFanActivationToken(): Uuid {
+	public function getFanActivationToken() : Uuid {
 		return $this->fanActivationToken;
 	}
 
 	/**
 	 * mutator method for fan activation token
 	 *
-	 * @param Uuid $fanActivationToken
+	 * @param Uuid $newFanActivationToken
 	 */
-	public function setFanActivationToken(Uuid $fanActivationToken) {
-		$this->fanActivationToken = $fanActivationToken;
+	public function setFanActivationToken( $newFanActivationToken) : void {
+		try {
+			$uuid = self::validateUuid($newFanActivationToken);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the fan activation token
+		$this->fanActivationToken = $uuid;
 	}
 
 	/**
@@ -138,19 +161,23 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 	}
 
 	/**
-	 * @param string $fanUsername
-	 * @throw \IN
+	 * @param string $newFanUsername
+	 * @throw \InvalidArgumentException if $newFanUsername is not a valid object or string
+	 * @throw \RangeException if $newFanUsername is > 32 characters
 	 */
 	public function setFanUsername(string $newFanUsername) : void {
 		$newFanUsername = trim($newFanUsername);
 		$newFanUsername = filter_var($newFanUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
+		// verifies that the username is valid
 		if(empty($newFanUsername) === true) {
 			throw(new \InvalidArgumentException("name is insecure"));
 		}
 
+		//verifies if the fan username is less than 32 characters
 		if(strlen($newFanUsername) > 32)
 			throw(new \RangeException("name cannot fit in mySQL"));
 
+		// store the new fan username
 		$this->fanUsername = $newFanUsername;
 	}
