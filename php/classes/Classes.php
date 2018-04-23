@@ -25,7 +25,7 @@ class Fan implements \JsonSerializable {
 	private $fanEmail;
 	/**
 	 * hash encryption for fan
-	 * @var
+	 * @var $fanHash
 	 */
 	private $fanHash;
 	/**
@@ -35,33 +35,34 @@ class Fan implements \JsonSerializable {
 	private $fanUsername;
 }
 
-/**
- * constructor for this Fan
- *
- * @param string|Uuid $newFanId id of this Fan or null if a new Fan
- * @param string|Uuid $newFanActivationToken token of the fan signs up
- * @param string $newFanEmail string containing Fan email address
- * @param string $newFanUsername string containing Fan username
- * @throws \InvalidArgumentException if data types are not valid
- * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
- * @throws \TypeError if data types violate type hints
- * @throws \Exception if some other exception occurs
- * @Documentation https://php.net/manual/en/language.oop5.decon.php
- **/
-public function __construct($newFanId, $newFanActivationToken, string $newFanEmail, $newFanHash, string $newFanUsername) {
-	try {
-		$this->setFanId($newFanId);
-		$this->setFanActivationToken($newFanActivationToken);
-		$this->setFanEmail($newFanEmail);
-		$this->setFanHash($newFanHash);
-		$this->setFanUsername($newFanUsername);
+	/**
+	 * constructor for this Fan
+	 *
+	 * @param string|Uuid $newFanId id of this Fan or null if a new Fan
+	 * @param string|Uuid $newFanActivationToken token of the fan signs up
+	 * @param string $newFanHash is used for password encryption
+	 * @param string $newFanEmail string containing Fan email address
+	 * @param string $newFanUsername string containing Fan username
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newFanId, $newFanActivationToken, string $newFanEmail, $newFanHash, string $newFanUsername) {
+		try {
+			$this->setFanId($newFanId);
+			$this->setFanActivationToken($newFanActivationToken);
+			$this->setFanEmail($newFanEmail);
+			$this->setFanHash($newFanHash);
+			$this->setFanUsername($newFanUsername);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
-		//determine what exception type was thrown
-	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-		$exceptionType = get_class($exception);
-		throw(new $exceptionType($exception->getMessage(), 0, $exception));
-	}
-}
 
 	/**
 	 * accessor method for fan id
@@ -69,7 +70,7 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 	 * @return Uuid value of fan id
 	 */
 	public function getFanId(): Uuid {
-		return $this->fanId;
+		return($this->fanId);
 	}
 
 	/**
@@ -85,71 +86,108 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 				throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 
-		// convert and store the fan activation token
+		// convert and store the fan id
 		$this->fanId = $uuid;
 	}
 
 	/**
-	 * accessor method for fan activation token
+	 * accessor method for account activation token
 	 *
-	 * @return Uuid
+	 * @return string value of the activation token
 	 */
-	public function getFanActivationToken() : Uuid {
-		return $this->fanActivationToken;
+	public function getFanActivationToken(): string {
+		return ($this->fanActivationToken);
 	}
-
 	/**
-	 * mutator method for fan activation token
+	 * mutator method for account activation token
 	 *
-	 * @param Uuid $newFanActivationToken
+	 * @param string $newFanActivationToken
+	 * @throws \InvalidArgumentException  if the token is not a string or insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 * @throws \TypeError if the activation token is not a string
 	 */
-	public function setFanActivationToken( $newFanActivationToken) : void {
-		try {
-			$uuid = self::validateUuid($newFanActivationToken);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	public function setFanActivationToken(string $newFanActivationToken): void {
+		if($newFanActivationToken === null) {
+			$this->fanActivationToken = null;
+			return;
 		}
-
-		// convert and store the fan activation token
-		$this->fanActivationToken = $uuid;
+		$newFanActivationToken = strtolower(trim($newFanActivationToken));
+		if(ctype_xdigit($newFanActivationToken) === false) {
+			throw(new\RangeException("user activation is not valid"));
+		}
+		//make sure user activation token is only 32 characters
+		if(strlen($newFanActivationToken) !== 32) {
+			throw(new\RangeException("user activation token has to be 32"));
+		}
+		$this->fanActivationToken = $newFanActivationToken;
 	}
 
 	/**
-	 * accessor method for fan email
+	 * accessor method for email
 	 *
-	 * @return string
-	 */
+	 * @return string value of email
+	 **/
 	public function getFanEmail(): string {
 		return $this->fanEmail;
 	}
-
 	/**
-	 * mutator method for fan email
+	 * mutator method for email
 	 *
-	 * @param string $fanEmail
-	 */
-	public function setFanEmail(string $fanEmail) {
-		$this->fanEmail = $fanEmail;
+	 * @param string $newFanEmail new value of email
+	 * @throws \InvalidArgumentException if $newFanEmail is not a valid email or insecure
+	 * @throws \RangeException if $newEmail is > 128 characters
+	 * @throws \TypeError if $newEmail is not a string
+	 **/
+	public function setFanEmail(string $newFanEmail): void {
+		// verify the email is secure
+		$newFanEmail = trim($newFanEmail);
+		$newFanEmail = filter_var($newFanEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newFanEmail) === true) {
+			throw(new \InvalidArgumentException("fan email is empty or insecure"));
+		}
+		// verify the email will fit in the database
+		if(strlen($newFanEmail) > 128) {
+			throw(new \RangeException("profile email is too large"));
+		}
+		// store the email
+		$this->fanEmail = $newFanEmail;
 	}
 
 	/**
-	 * accessor method for fan hash
+	 * accessor method for fanHash
 	 *
-	 * @return mixed
+	 * @return string value of hash
 	 */
-	public function getFanHash() {
+	public function getFanHash(): string {
 		return $this->fanHash;
 	}
-
 	/**
-	 * mutator method for fan hash
+	 * mutator method for profile hash password
 	 *
-	 * @param mixed $fanHash
+	 * @param string $newFanHash
+	 * @throws \InvalidArgumentException if the hash is not secure
+	 * @throws \RangeException if the hash is not 128 characters
+	 * @throws \TypeError if profile hash is not a string
 	 */
-	public function setFanHash($fanHash): void {
-		$this->profileHash = $profileHash;
+	public function setFanHash(string $newFanHash): void {
+		//enforce that the hash is properly formatted
+		$newFanHash = trim($newFanHash);
+		$newFanHash = strtolower($newFanHash);
+		if(empty($newFanHash) === true) {
+			throw(new \InvalidArgumentException("profile password hash empty or insecure"));
 		}
+		//enforce that the hash is a string representation of a hexadecimal
+		if(!ctype_xdigit($newFanHash)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the hash is exactly 128 characters.
+		if(strlen($newFanHash) !== 128) {
+			throw(new \RangeException("profile hash must be 128 characters"));
+		}
+		//store the hash
+		$this->fanHash = $newFanHash;
+	}
+
 
 	/**
 	 * accessor method for fan username
@@ -157,10 +195,12 @@ public function __construct($newFanId, $newFanActivationToken, string $newFanEma
 	 * @return string
 	 */
 	public function getFanUsername(): string {
-		return $this->fanUsername;
+		return($this->fanUsername);
 	}
 
 	/**
+	 * mutator method for fan username
+	 *
 	 * @param string $newFanUsername
 	 * @throw \InvalidArgumentException if $newFanUsername is not a valid object or string
 	 * @throw \RangeException if $newFanUsername is > 32 characters
