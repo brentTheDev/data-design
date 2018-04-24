@@ -7,6 +7,8 @@ VALUES (UNHEX(REPLACE("f5ea6c2e-9d3c-4207-83c5-aa0009d130ea", "-", "")), "52637"
 UPDATE fan SET fanEmail = 'newguy@guy.com' WHERE fanUsername = 'greatuser';
 UPDATE fan SET fanEmail = 'topgun@apex.com' WHERE fanUsername = 'thatuser';
 
+SELECT fanActivationToken FROM fan WHERE fanActivationToken = '01234';
+
 DELETE FROM fan WHERE fanUsername = 'thatuser';
 DELETE FROM fan WHERE fanUsername = 'greatuser';
 
