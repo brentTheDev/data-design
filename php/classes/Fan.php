@@ -33,7 +33,7 @@ class Fan implements \JsonSerializable {
 	 * @var string $fanUsername
 	 */
 	private $fanUsername;
-}
+
 
 	/**
 	 * constructor for this Fan
@@ -56,8 +56,7 @@ class Fan implements \JsonSerializable {
 			$this->setFanEmail($newFanEmail);
 			$this->setFanHash($newFanHash);
 			$this->setFanUsername($newFanUsername);
-		}
-			//determine what exception type was thrown
+		} //determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -70,7 +69,7 @@ class Fan implements \JsonSerializable {
 	 * @return Uuid value of fan id
 	 */
 	public function getFanId(): Uuid {
-		return($this->fanId);
+		return ($this->fanId);
 	}
 
 	/**
@@ -78,12 +77,12 @@ class Fan implements \JsonSerializable {
 	 *
 	 * @param Uuid|string $newFanId
 	 */
-	public function setFanId( $newFanId) {
+	public function setFanId($newFanId) {
 		try {
-				$uuid = self::validateUuid( $newFanId);
+			$uuid = self::validateUuid($newFanId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				$exceptionType = get_class($exception);
-				throw(new $exceptionType($exception->getMessage(), 0, $exception));
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 
 		// convert and store the fan id
@@ -98,6 +97,7 @@ class Fan implements \JsonSerializable {
 	public function getFanActivationToken(): string {
 		return ($this->fanActivationToken);
 	}
+
 	/**
 	 * mutator method for account activation token
 	 *
@@ -130,6 +130,7 @@ class Fan implements \JsonSerializable {
 	public function getFanEmail(): string {
 		return $this->fanEmail;
 	}
+
 	/**
 	 * mutator method for email
 	 *
@@ -161,6 +162,7 @@ class Fan implements \JsonSerializable {
 	public function getFanHash(): string {
 		return $this->fanHash;
 	}
+
 	/**
 	 * mutator method for profile hash password
 	 *
@@ -195,7 +197,7 @@ class Fan implements \JsonSerializable {
 	 * @return string
 	 */
 	public function getFanUsername(): string {
-		return($this->fanUsername);
+		return ($this->fanUsername);
 	}
 
 	/**
@@ -205,7 +207,7 @@ class Fan implements \JsonSerializable {
 	 * @throw \InvalidArgumentException if $newFanUsername is not a valid object or string
 	 * @throw \RangeException if $newFanUsername is > 32 characters
 	 */
-	public function setFanUsername(string $newFanUsername) : void {
+	public function setFanUsername(string $newFanUsername): void {
 		$newFanUsername = trim($newFanUsername);
 		$newFanUsername = filter_var($newFanUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
@@ -230,7 +232,7 @@ class Fan implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo) : void {
+	public function insert(\PDO $pdo): void {
 
 		// create query template
 		$query = "INSERT INTO fan(fanId, fanActivationToken, fanEmail, fanHash, fanUsername) VALUES(:fanId, :fanActivationToken, :fanEmail, :fanHash, :fanUsername)";
@@ -248,7 +250,7 @@ class Fan implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo) : void {
+	public function delete(\PDO $pdo): void {
 
 		// create query template
 		$query = "DELETE FROM fan WHERE fanId = :fanId";
@@ -266,12 +268,12 @@ class Fan implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function update(\PDO $pdo) : void {
+	public function update(\PDO $pdo): void {
 
 		// create query template
 		$query = "UPDATE fan SET fanActivationToken = :fanActivationToken, fanEmail = :fanEmail, fanHash = :fanHash, fanUsername = :fanUsename WHERE fanId = :fanId";
 		$statement = $pdo->prepare($query);
-	
+
 		// bind the member variables to the place holders in the template
 		$parameters = ["fanId" => $this->fanId->getBytes(), "fanActivationToken" => $this->fanActivationToken, "fanEmail" => $this->fanEmail, "fanHash" => $this->fanHash, "fanUsername" => $this->fanUsername];
 		$statement->execute($parameters);
@@ -286,7 +288,7 @@ class Fan implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getFanByFanId(\PDO $pdo, $fanId) : ?Fan {
+	public static function getFanByFanId(\PDO $pdo, $fanId): ?Fan {
 		// sanitize the tweetId before searching
 		try {
 			$fanId = self::validateUuid($fanId);
@@ -314,5 +316,18 @@ class Fan implements \JsonSerializable {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($fan);
+		return ($fan);
 	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize(): array {
+		$fields = get_object_vars($this);
+
+		$fields["fanId"] = $this->fanId->toString();
+		return ($fields);
+	}
+}
