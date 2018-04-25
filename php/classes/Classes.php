@@ -156,7 +156,7 @@ class Fan implements \JsonSerializable {
 	/**
 	 * accessor method for fanHash
 	 *
-	 * @return string value of hash
+	 * @freturn string value of hash
 	 */
 	public function getFanHash(): string {
 		return $this->fanHash;
@@ -220,4 +220,41 @@ class Fan implements \JsonSerializable {
 
 		// store the new fan username
 		$this->fanUsername = $newFanUsername;
+	}
+
+
+	/**
+	 * inserts this Fan profile into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+
+		// create query template
+		$query = "INSERT INTO fan(fanId, fanActivationToken, fanEmail, fanHash, fanUsername) VALUES(:fanId, :fanActivationToken, :fanEmail, :fanHash, :fanUsername)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["fanId" => $this->fanId->getBytes(), "fanActivationToken" => $this->fanActivationToken->getBytes(), "fanEmail" => $this->fanEmail, "fanHash" => $this->fanHash, "fanUsername" => $this->fanUsernam];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes this Fan profile from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM fan WHERE fanId = :fanId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["fanId" => $this->fanId->getBytes()];
+		$statement->execute($parameters);
 	}
