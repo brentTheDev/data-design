@@ -237,7 +237,7 @@ class Fan implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["fanId" => $this->fanId->getBytes(), "fanActivationToken" => $this->fanActivationToken->getBytes(), "fanEmail" => $this->fanEmail, "fanHash" => $this->fanHash, "fanUsername" => $this->fanUsernam];
+		$parameters = ["fanId" => $this->fanId->getBytes(), "fanActivationToken" => $this->fanActivationToken->getBytes(), "fanEmail" => $this->fanEmail, "fanHash" => $this->fanHash, "fanUsername" => $this->fanUsername];
 		$statement->execute($parameters);
 	}
 
@@ -256,5 +256,23 @@ class Fan implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$parameters = ["fanId" => $this->fanId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes this Fan profile from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE fan SET fanActivationToken = :fanActivationToken, fanEmail = :fanEmail, fanHash = :fanHash, fanUsername = :fanUsename WHERE fanId = :fanId";
+		$statement = $pdo->prepare($query);
+	
+		// bind the member variables to the place holders in the template
+		$parameters = ["fanId" => $this->fanId->getBytes(), "fanActivationToken" => $this->fanActivationToken->getBytes(), "fanEmail" => $this->fanEmail, "fanHash" => $this->fanHash, "fanUsername" => $this->fanUsername];
 		$statement->execute($parameters);
 	}
