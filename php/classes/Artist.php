@@ -13,7 +13,7 @@ class Artist implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for the artist; this is the primary key
-	 * @var Uuid $artistId
+	 * @var string|Uuid $artistId
 	 */
 	private $artistId;
 	/**
@@ -32,15 +32,15 @@ class Artist implements \JsonSerializable {
 	 * constructor for this Fan
 	 *
 	 * @param string|Uuid $newArtistId id of this Artist or null if a new Artist
-	 * @param string $artistGenre string containing musical genre of the Artist
-	 * @param string $artistName string containing name of Artist
+	 * @param string $newArtistGenre string containing musical genre of the Artist
+	 * @param string $newArtistName string containing name of Artist
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArtistId, string $newArtistGenre, string $newArtistName) {
+	public function __construct(string $newArtistId, string $newArtistGenre, string $newArtistName) {
 		try {
 			$this->setArtistId($newArtistId);
 			$this->setArtistGenre($newArtistGenre);
@@ -64,7 +64,7 @@ class Artist implements \JsonSerializable {
 	/**
 	 * mutator method for artist id
 	 *
-	 * @param Uuid|string $newAristId
+	 * @param Uuid|string $newArtistId
 	 */
 	public function setArtistId($newArtistId) {
 		try {

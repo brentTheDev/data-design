@@ -9,6 +9,8 @@ UPDATE fan SET fanEmail = 'topgun@apex.com' WHERE fanUsername = 'thatuser';
 
 SELECT fanActivationToken FROM fan WHERE fanActivationToken = '01234';
 
+SELECT fan.* FROM fan LEFT JOIN artist ON fanId = artistId WHERE artistId IS NULL;
+
 DELETE FROM fan WHERE fanUsername = 'thatuser';
 DELETE FROM fan WHERE fanUsername = 'greatuser';
 

@@ -25,7 +25,7 @@ class Fan implements \JsonSerializable {
 	private $fanEmail;
 	/**
 	 * hash encryption for fan
-	 * @var $fanHash
+	 * @var string $fanHash
 	 */
 	private $fanHash;
 	/**
@@ -49,7 +49,7 @@ class Fan implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newFanId, $newFanActivationToken, string $newFanEmail, $newFanHash, string $newFanUsername) {
+	public function __construct(string $newFanId, string $newFanActivationToken, string $newFanEmail, string $newFanHash, string $newFanUsername) {
 		try {
 			$this->setFanId($newFanId);
 			$this->setFanActivationToken($newFanActivationToken);
@@ -326,8 +326,12 @@ class Fan implements \JsonSerializable {
 	 **/
 	public function jsonSerialize(): array {
 		$fields = get_object_vars($this);
+		unset($fields["fanActivationToken"]);
+		unset($fields["fanHash"]);
 
 		$fields["fanId"] = $this->fanId->toString();
 		return ($fields);
 	}
 }
+
+
